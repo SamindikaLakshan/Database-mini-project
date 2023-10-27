@@ -18,3 +18,215 @@ IDENTIFIED BY 'student123';
 
 quit;
 
+CREATE TABLE ADMIN (
+    A_id INT AUTO_INCREAMENT,
+    A_name VARCHAR(30),
+    A_mail VARCHAR(30),
+    PRIMARY KEY(A_id)
+);
+
+INSERT INTO ADMIN
+VALUES
+(1,'A.A.P Samantha','samantha@gmail.com');
+
+CREATE TABLE DEAN (
+    Dean_id INT AUTO_INCREAMENT,
+    Dean_name VARCHAR(30),
+    Dean_mail varchar(30),
+    Dean_gender char(1),
+    Dean_salary FLOAT(8,2),
+    PRIMARY KEY(Dean_id)
+);
+
+INSERT INTO DEAN
+VALUES
+(1,'A.M.S. Subhash','subhash@gmail.com','M',200000.00);
+
+
+CREATE TABLE DEPARTMENT (
+    D_id CHAR(4),
+    D_name VARCHAR(30),
+    PRIMARY KEY(D_id)
+);
+
+INSERT INTO DEPARTMENT 
+VALUES
+('FOT1','ICT'),
+('FOT2','ET'),
+('FOT3','BST'),
+('FOT4','MULTIDECIPLINARY');
+
+CREATE TABLE DEPARTMENT_LOCATION (
+    D_id CHAR(4),
+    D_location VARCHAR(30)
+);
+
+INSERT INTO DEPARTMENT_LOCATION 
+VALUES
+('FOT1','D_hall 1st floor'),
+('FOT2','D_hall ground floor'),
+('FOT3','D_hall 2nd floor'),
+('FOT4','New bulding'),
+('FOT3','behind the library');
+
+
+CREATE TABLE LECTURER (
+    L_id VARCHAR(5),
+    L_name VARCHAR(30),
+    L_email VARCHAR(30),
+    L_salary FLOAT(8,2),
+    PRIMARY KEY (L_id)
+);
+
+INSERT INTO LECTURER 
+VALUES
+('LEC1','A.M.S.Subash Jayasinghe','subhash@gmail.com',200000.00),
+('LEC2','K.K. Nilanthi Adikaram','nilanthi@gmail.com',150000.00),
+('LEC3','P.H.P. Nuwan Laksiri','nuwan2gmail.com',200000.00),
+('LEC4','A. Harshana Senavirathna','harshana@gmail.com',150000.00),
+('LEC5','S. Hiranya Amarasinghe','hiranya@gmail.com',175000.00),
+('LEC6','C. Chanduni Gamage','chanduni@gmail.com',175000.00),
+('LEC7','K.A. Rumeshika W. arachchi','rumeshika@gmail.com',175000.00),
+('LEC8','M. Chathuranga Adhikari','chathurange@gmail.com',170000.00);
+
+CREATE TABLE STUDENT (
+    S_id CHAR(6),
+    F_name VARCHAR(15),
+    L_name VARCHAR(15),
+    S_mail VARCHAR(30),
+    Gender CHAR(1),
+    Dob DATE,
+    PRIMARY KEY(S_id)
+);
+
+INSERT INTO STUDENT 
+VALUES
+('TG1011','G.B.S.','Jayoda','jayoda@gmail.com','F','2001-05-06'),
+('TG1012','M.P.C.','Priyamantha','priyamantha@gmail.com','M','2002-05-06'),
+('TG1013','K.P.C.','Kavindu','kavindu@gmail.com','M','2001-04-14'),
+('TG1014','A.M.S.','Kumara','kumara@gmail.com','M','2000-08-28'),
+('TG1015','K.A.A','Rajapaksha','rajapaksha@gmail.com','M','2002-01-13'),
+('TG1016','S.A.','Supun','Supun@gmail.com','M','2001-06-23'),
+('TG1017','K.L.','Anuruddhika','anu@gmail.com','F','2000-04-12'),
+('TG1018','P.C.K.','Thilakarathne','kalana@gmail.com','M','2000-09-12'),
+('TG1019','M.S.','Anusha','anusha@gmail.com','F','2001-05-13'),
+('TG1020','D.A.','Dulangi','dula@gmail.com','F','2001-08-20'),
+('TG1021','M.M.S.','Lakshan','lakshan@gmail.com','M','2001-05-05');
+
+CREATE TABLE STUDENT_BELONGS_DEPARTMENT (
+    S_id CHAR(6),
+    D_id CHAR(4)
+);
+
+INSERT INTO STUDENT_BELONGS_DEPARTMENT 
+VALUES
+('TG1011','FOT1'),
+('TG1012','FOT1'),
+('TG1013','FOT1'),
+('TG1014','FOT1'),
+('TG1015','FOT1'),
+('TG1016','FOT1'),
+('TG1017','FOT1'),
+('TG1018','FOT1'),
+('TG1019','FOT1'),
+('TG1020','FOT1'),
+('TG1021','FOT1');
+
+CREATE TABLE LECTURER_TEACHES_STUDENTS (
+    L_id VARCHAR(5),
+    S_id CHAR(6)
+);
+
+INSERT INTO LECTURER_TEACHES_STUDENT 
+VALUES
+('LEC1','TG1011'),
+('LEC1','TG1012'),
+('LEC1','TG1014'),
+('LEC1','TG1015'),
+('LEC1','TG1016'),
+('LEC1','TG1017'),
+('LEC1','TG1018'),
+('LEC1','TG1019'),
+('LEC1','TG1020'),
+('LEC1','TG1021'),
+('LEC2','TG1011'),
+('LEC2','TG1012'),
+('LEC2','TG1013'),
+('LEC2','TG1014'),
+('LEC2','TG1015'),
+('LEC2','TG1016'),
+('LEC2','TG1017'),
+('LEC2','TG1018'),
+('LEC2','TG1019'),
+('LEC2','TG1020'),
+('LEC2','TG1021'),
+('LEC3','TG1011'),
+('LEC3','TG1012'),
+('LEC3','TG1013'),
+('LEC3','TG1014'),
+('LEC3','TG1015'),
+('LEC3','TG1016'),
+('LEC3','TG1017'),
+('LEC3','TG1018'),
+('LEC3','TG1019'),
+('LEC3','TG1020'),
+('LEC3','TG1021'),
+('LEC4','TG1011'),
+('LEC4','TG1012'),
+('LEC4','TG1013'),
+('LEC4','TG1014'),
+('LEC4','TG1015'),
+('LEC4','TG1016'),
+('LEC4','TG1017'),
+('LEC4','TG1018'),
+('LEC4','TG1019'),
+('LEC4','TG1020'),
+('LEC4','TG1021'),
+('LEC5','TG1011'),
+('LEC5','TG1012'),
+('LEC5','TG1013'),
+('LEC5','TG1014'),
+('LEC5','TG1015'),
+('LEC5','TG1016'),
+('LEC5','TG1017'),
+('LEC5','TG1018'),
+('LEC5','TG1019'),
+('LEC5','TG1020'),
+('LEC5','TG1021'),
+('LEC6','TG1011'),
+('LEC6','TG1012'),
+('LEC6','TG1013'),
+('LEC6','TG1014'),
+('LEC6','TG1015'),
+('LEC6','TG1016'),
+('LEC6','TG1017'),
+('LEC6','TG1018'),
+('LEC6','TG1019'),
+('LEC6','TG1020'),
+('LEC6','TG1021'),
+('LEC7','TG1011'),
+('LEC7','TG1012'),
+('LEC7','TG1013'),
+('LEC7','TG1014'),
+('LEC7','TG1015'),
+('LEC7','TG1016'),
+('LEC7','TG1017'),
+('LEC7','TG1018'),
+('LEC7','TG1019'),
+('LEC7','TG1020'),
+('LEC7','TG1021'),
+('LEC8','TG1011'),
+('LEC8','TG1012'),
+('LEC8','TG1013'),
+('LEC8','TG1014'),
+('LEC8','TG1015'),
+('LEC8','TG1016'),
+('LEC8','TG1017'),
+('LEC8','TG1018'),
+('LEC8','TG1019'),
+('LEC8','TG1020'),
+('LEC8','TG1021');
+
+
+
+
