@@ -19,7 +19,7 @@ IDENTIFIED BY 'student123';
 quit;
 
 CREATE TABLE ADMIN (
-    A_id INT AUTO_INCREAMENT,
+    A_id INT AUTO_INCREMENT,
     A_name VARCHAR(30),
     A_mail VARCHAR(30),
     PRIMARY KEY(A_id)
@@ -30,7 +30,7 @@ VALUES
 (1,'A.A.P Samantha','samantha@gmail.com');
 
 CREATE TABLE DEAN (
-    Dean_id INT AUTO_INCREAMENT,
+    Dean_id INT AUTO_INCREMENT,
     Dean_name VARCHAR(30),
     Dean_mail varchar(30),
     Dean_gender char(1),
@@ -41,13 +41,12 @@ CREATE TABLE DEAN (
 
 INSERT INTO DEAN
 VALUES
-(1,'A.M.S. Subhash','subhash@gmail.com','M',200000.00);
+(1,'A.M.S. Subhash','subhash@gmail.com','M',200000.00,'FOT1');
 
 
 CREATE TABLE DEPARTMENT (
     D_id CHAR(4),
     D_name VARCHAR(30),
-    Dean_id INT,
     PRIMARY KEY(D_id)
 );
 
@@ -83,14 +82,14 @@ CREATE TABLE LECTURER (
 
 INSERT INTO LECTURER 
 VALUES
-('LEC1','A.M.S.Subash Jayasinghe','subhash@gmail.com',200000.00),
-('LEC2','K.K. Nilanthi Adikaram','nilanthi@gmail.com',150000.00),
-('LEC3','P.H.P. Nuwan Laksiri','nuwan2gmail.com',200000.00),
-('LEC4','A. Harshana Senavirathna','harshana@gmail.com',150000.00),
-('LEC5','S. Hiranya Amarasinghe','hiranya@gmail.com',175000.00),
-('LEC6','C. Chanduni Gamage','chanduni@gmail.com',175000.00),
-('LEC7','K.A. Rumeshika W. arachchi','rumeshika@gmail.com',175000.00),
-('LEC8','M. Chathuranga Adhikari','chathurange@gmail.com',170000.00);
+('LEC1','A.M.S.Subash Jayasinghe','subhash@gmail.com',200000.00,'FOT1'),
+('LEC2','K.K. Nilanthi Adikaram','nilanthi@gmail.com',150000.00,'FOT4'),
+('LEC3','P.H.P. Nuwan Laksiri','nuwan2gmail.com',200000.00,'FOT1'),
+('LEC4','A. Harshana Senavirathna','harshana@gmail.com',150000.00,'FOT2'),
+('LEC5','S. Hiranya Amarasinghe','hiranya@gmail.com',175000.00,'FOT4'),
+('LEC6','C. Chanduni Gamage','chanduni@gmail.com',175000.00,'FOT1'),
+('LEC7','K.A. Rumeshika W. arachchi','rumeshika@gmail.com',175000.00,'FOT1'),
+('LEC8','M. Chathuranga Adhikari','chathurange@gmail.com',170000.00,'FOT4');
 
 CREATE TABLE STUDENT (
     S_id CHAR(6),
@@ -140,7 +139,7 @@ CREATE TABLE LECTURER_TEACHES_STUDENTS (
     S_id CHAR(6)
 );
 
-INSERT INTO LECTURER_TEACHES_STUDENT 
+INSERT INTO LECTURER_TEACHES_STUDENTS 
 VALUES
 ('LEC1','TG1011'),
 ('LEC1','TG1012'),
