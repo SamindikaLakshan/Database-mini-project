@@ -35,6 +35,7 @@ CREATE TABLE DEAN (
     Dean_mail varchar(30),
     Dean_gender char(1),
     Dean_salary FLOAT(8,2),
+    D_id CHAR(4),
     PRIMARY KEY(Dean_id)
 );
 
@@ -46,6 +47,7 @@ VALUES
 CREATE TABLE DEPARTMENT (
     D_id CHAR(4),
     D_name VARCHAR(30),
+    Dean_id INT,
     PRIMARY KEY(D_id)
 );
 
@@ -75,6 +77,7 @@ CREATE TABLE LECTURER (
     L_name VARCHAR(30),
     L_email VARCHAR(30),
     L_salary FLOAT(8,2),
+    D_id CHAR(4),
     PRIMARY KEY (L_id)
 );
 
