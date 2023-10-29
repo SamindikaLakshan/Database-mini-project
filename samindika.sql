@@ -98,6 +98,7 @@ CREATE TABLE STUDENT (
     S_mail VARCHAR(30),
     Gender CHAR(1),
     Dob DATE,
+    Status VARCHAR(10),
     PRIMARY KEY(S_id)
 );
 
@@ -230,5 +231,48 @@ VALUES
 ('LEC8','TG1021');
 
 
+CREATE VIEW ATTENDENCE_PERCENTAGE AS 
+SELECT C_code AS 'Subject_code',At_id AS 'Student_reg_num',((Medical+sessions)/15)*100 AS 'Percentage'
+FROM ATTENDENCE;
 
+CREATE VIEW ATTENDENCE_ELIGIBILITY AS 
+SELECT Subject_code,Student_reg_num, IF(Percentage>80,'EL','NOT_EL') AS 'Elegibility'
+FROM ATTENDENCE_PERCENTAGE;
+
+CREATE VIEW STUDENT_THEORY_GRADES AS
+SELECT C_code AS 'Subject_code',S_id AS 'Student_reg_num',Final_marks AS 'Theory_Final_Marks',IF(Final_marks>=85,'A+',IF((Final_marks<84 && Final_marks>=75),'A',IF((Final_marks<74 && Final_marks>=70),'A-',IF((Final_marks<69 && Final_marks>=65),'B+',IF((Final_marks<64 && Final_marks>=60),'B',IF((Final_marks<59 && Final_marks>=55),'B-',IF((Final_marks<54 && Final_marks>=50),'C+',IF((Final_marks<49 && Final_marks>=45),'C',IF((Final_marks<44 && Final_marks>=40),'C-','F'))))))))) AS 'Grade'
+FROM COURSE_THEORY_FINAL;
+
+CREATE VIEW STUDENT_PRACTICAL_GRADES AS
+SELECT C_code AS 'Subject_code',S_id AS 'Student_reg_num',Final_marks AS 'Practical_Final_Marks',IF(Final_marks>=85,'A+',IF((Final_marks<84 && Final_marks>=75),'A',IF((Final_marks<74 && Final_marks>=70),'A-',IF((Final_marks<69 && Final_marks>=65),'B+',IF((Final_marks<64 && Final_marks>=60),'B',IF((Final_marks<59 && Final_marks>=55),'B-',IF((Final_marks<54 && Final_marks>=50),'C+',IF((Final_marks<49 && Final_marks>=45),'C',IF((Final_marks<44 && Final_marks>=40),'C-','F'))))))))) AS 'Grade'
+FROM COURSE_PRACTICAL_FINAL;
+
+CREATE VIEW CGP AS
+SELECT Subject_code,Student_reg_num,Grade,
+CASE 
+WHEN STUDENT_THEORY_GRADES.Grade='A+' THEN 4.00
+WHEN STUDENT_THEORY_GRADES.Grade='A' THEN 4.00
+WHEN STUDENT_THEORY_GRADES.Grade='A-' THEN 3.70
+WHEN STUDENT_THEORY_GRADES.Grade='B+' THEN 3.30
+WHEN STUDENT_THEORY_GRADES.Grade='B' THEN 3.00
+WHEN STUDENT_THEORY_GRADES.Grade='B-' THEN 2.70
+WHEN STUDENT_THEORY_GRADES.Grade='C+' THEN 2.30
+WHEN STUDENT_THEORY_GRADES.Grade='C' THEN 2.00
+WHEN STUDENT_THEORY_GRADES.Grade='C-' THEN 1.30
+ELSE 0.00
+END AS 'CGP'
+FROM STUDENT_THEORY_GRADES; 
+
+CREATE VIEW STUDENT_SGPA AS
+SELECT Student_reg_num,SUM(a.CGP*b.Credits)/SUM(b.Credits) AS 'SGPA'
+FROM CGP a, COURSE_UNITS b
+WHERE a.Subject_code=b.C_code
+GROUP BY Student_reg_num;
+
+
+CREATE VIEW STUDENT_CGPA AS
+SELECT Student_reg_num,SUM(a.CGP*b.Credits)/SUM(b.Credits) AS 'CGPA'
+FROM CGP a, COURSE_UNITS b
+WHERE a.Subject_code=b.C_code AND a.Subject_code != 'ENG1212'
+GROUP BY Student_reg_num;
 
