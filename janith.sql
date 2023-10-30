@@ -10,7 +10,7 @@ VALUES
 ('TG1014','Kumara'),
 ('TG1021','Lakshan'),
 ('TG1013','Kavindu'),
-('TG1011','Jayoda')
+('TG1011','Jayoda'),
 ('TG1019','Anusha');
 
 
@@ -23,48 +23,38 @@ CREATE TABLE COURSE_HAS_REPEATERS(
 
 INSERT INTO COURSE_HAS_REPEATERS
 VALUES
-    ("TMS1233","TG1014")
-    ("ICT1242","TG1021")
-    ("ICT1222","TG1011")
-    ("TCS1212","TG1013")
-    ("ICT1233","Anusha");
+    ("TMS1233","TG1014"),
+    ("ICT1242","TG1021"),
+    ("ICT1222","TG1011"),
+    ("TCS1212","TG1013"),
+    ("ICT1233","TG1019");
 
 
-    CREATE VIEW THEORY_CA__ELIGIBILITY AS 
-    SELECT SUM(A.T_assignment_marks + A.T_mid_marks + B.Quiz_marks)*100/3 
-    FROM COURSE_THEORY_CA AS A , COURSE_THEORY_CA_QUIZ AS B;
 
-    CREATE VIEW PRACTICAL_CA_ELIGIBILITY AS 
-    SELECT SUM(p_assignment_marks + P_mid_marks)*100/2 
-    FROM COURSE_PRACTICAL_CA;
 
-    CREATE VIEW THEORY_CA AS 
-    SELECT A.T_assignment_marks + A.T_mid_marks + B.Quiz_marks 
-    FROM  COURSE_THEORY_CA AS A, COURSE_THEORY_CA_QUIZ AS B
-    WHERE C_code = "";
 
-    CREATE VIEW PRACTICAL_CA AS 
-    SELECT p_assignment_marks + P_mid_marks 
-    FROM COURSE_PRACTICAL_CA
-    WHERE C_code = "";
+//Marks Related requirements
 
-    CREATE VIEW INDIVIDUALS_THEORY_CA AS 
-    SELECT A.T_assignment_marks + A.T_mid_marks + B.Quiz_marks 
-    FROM  COURSE_THEORY_CA AS A , COURSE_THEORY_CA_QUIZ AS B
-    WHERE C_code = "" AND S_id = "";
+CREATE VIEW THEORY_CA AS 
+SELECT A.S_id,A.C_code,((A.T_assignment_marks/4)+(A.T_mid_marks/2)+(B.Quiz_marks/4)) AS 'CA'
+FROM COURSE_THEORY_CA AS A , COURSE_THEORY_CA_QUIZ AS B
+WHERE A.C_code=B.C_code AND A.S_id=B.S_id;
 
-    CREATE VIEW INDIVIDUALS_PRACTICAL_CA AS 
-    SELECT p_assignment_marks + P_mid_marks 
-    FROM  COURSE_PRACTICAL_CA
-    WHERE C_code = "" AND S_id = "";
+CREATE VIEW PRACTICAL_CA AS 
+SELECT A.S_id,A.C_code,((B.p_assignment_marks/4)+(B.P_mid_marks/2)+(A.Quiz_marks/4)) AS 'P_CA'
+FROM COURSE_PRACTICAL_CA_QUIZ AS A, COURSE_PRACTICAL_CA AS B
+WHERE A.C_code=B.C_code AND A.S_id=B.S_id;
 
-    CREATE VIEW THEORY_FINAL_MARKS AS 
-    SELECT S_id , Final_marks 
-    FROM COURSE_THEORY_FINAL;
+CREATE VIEW T_CA_ELEGIBILITY AS 
+SELECT S_id,C_code,CA,IF(CA>50,'EL','NOT_EL') AS 'Elegibility'
+FROM THEORY_CA;
 
-    CREATE VIEW PRACTICAL_FINAL_MARKS AS 
-    SELECT S_id , Final_marks
-    FROM COURSE_PRACTICAL_FINAL;
+CREATE VIEW P_CA_ELEGIBILITY AS 
+SELECT S_id,C_code,P_CA,IF(P_CA>50,'EL','NOT_EL') AS 'Elegibility'
+FROM PRACTICAL_CA;
+
+
+
 
 
 
