@@ -1,20 +1,25 @@
 CREATE USER 'Admin'@'localhost'
 IDENTIFIED BY 'admin123';
+FLUSH PRIVILEGES;
 
 mysql -u Admin -p
 admin123
 
 CREATE USER 'Dean'@'localhost'
 IDENTIFIED BY 'dean123';
+FLUSH PRIVILEGES;
 
 CREATE USER 'Lecturer'@'localhost'
 IDENTIFIED BY 'lec123';
+FLUSH PRIVILEGES;
 
 CREATE USER 'Technicalofficer'@'localhost'
 IDENTIFIED BY 'to123';
+FLUSH PRIVILEGES;
 
 CREATE USER 'Student'@'localhost'
 IDENTIFIED BY 'student123';
+FLUSH PRIVILEGES;
 
 quit;
 
@@ -98,7 +103,6 @@ CREATE TABLE STUDENT (
     S_mail VARCHAR(30),
     Gender CHAR(1),
     Dob DATE,
-    Status VARCHAR(10),
     PRIMARY KEY(S_id)
 );
 
@@ -231,6 +235,16 @@ VALUES
 ('LEC8','TG1021');
 
 
+
+
+
+
+
+
+
+
+//Attendance Related requirements
+
 CREATE VIEW ATTENDENCE_PERCENTAGE AS 
 SELECT C_code AS 'Subject_code',At_id AS 'Student_reg_num',((Medical+sessions)/15)*100 AS 'Percentage'
 FROM ATTENDENCE;
@@ -238,6 +252,32 @@ FROM ATTENDENCE;
 CREATE VIEW ATTENDENCE_ELIGIBILITY AS 
 SELECT Subject_code,Student_reg_num, IF(Percentage>80,'EL','NOT_EL') AS 'Elegibility'
 FROM ATTENDENCE_PERCENTAGE;
+
+
+
+
+
+
+//Eligibility requirements
+
+CREATE VIEW T_FINAL_EXAM_ELEGIBILITY AS
+SELECT Student_reg_num,Subject_code,IF((A.Elegibility='EL' && B.Elegibility='EL'),'EL','NOT_EL') AS 'Final_Elegibility'
+FROM ATTENDENCE_ELIGIBILITY AS A,T_CA_ELEGIBILITY AS B
+WHERE A.Student_reg_num=B.S_id AND B.C_code=A.Subject_code;
+
+CREATE VIEW P_FINAL_EXAM_ELEGIBILITY AS
+SELECT Student_reg_num,Subject_code,IF((A.Elegibility='EL' && B.Elegibility='EL'),'EL','NOT_EL') AS 'Final_Elegibility'
+FROM ATTENDENCE_ELIGIBILITY AS A,P_CA_ELEGIBILITY AS B
+WHERE A.Student_reg_num=B.S_id AND B.C_code=A.Subject_code;
+
+
+
+
+
+
+
+
+//Other requirements
 
 CREATE VIEW STUDENT_THEORY_GRADES AS
 SELECT C_code AS 'Subject_code',S_id AS 'Student_reg_num',Final_marks AS 'Theory_Final_Marks',IF(Final_marks>=85,'A+',IF((Final_marks<84 && Final_marks>=75),'A',IF((Final_marks<74 && Final_marks>=70),'A-',IF((Final_marks<69 && Final_marks>=65),'B+',IF((Final_marks<64 && Final_marks>=60),'B',IF((Final_marks<59 && Final_marks>=55),'B-',IF((Final_marks<54 && Final_marks>=50),'C+',IF((Final_marks<49 && Final_marks>=45),'C',IF((Final_marks<44 && Final_marks>=40),'C-','F'))))))))) AS 'Grade'
@@ -276,3 +316,30 @@ FROM CGP a, COURSE_UNITS b
 WHERE a.Subject_code=b.C_code AND a.Subject_code != 'ENG1212'
 GROUP BY Student_reg_num;
 
+
+
+
+
+//give permissions to users
+
+
+GRANT ALL PRIVILEGES ON LMS.* TO 'Admin'@'localhost'
+WITH GRANT OPTION;
+
+GRANT ALL PRIVILEGES ON LMS.* TO 'Dean'@'localhost';
+
+GRANT SELECT,INSERT,UPDATE,DELETE ON LMS.* TO 'Lecturer'@'localhost';
+
+GRANT SELECT,INSERT,UPDATE ON LMS.attendence TO 'Technicalofficer'@'localhost'
+WITH GRANT OPTION;
+GRANT SELECT,INSERT,UPDATE ON LMS.attendence_eligibility TO 'Technicalofficer'@'localhost'
+WITH GRANT OPTION;
+GRANT SELECT,INSERT,UPDATE ON LMS.attendence_percentage TO 'Technicalofficer'@'localhost'
+WITH GRANT OPTION;
+
+GRANT SELECT ON LMS.attendence_eligibility TO 'student'@'localhost'
+WITH GRANT OPTION;
+GRANT SELECT ON LMS.course_practical_final TO 'student'@'localhost'
+WITH GRANT OPTION;
+GRANT SELECT ON LMS.course_theory_final TO 'student'@'localhost'
+WITH GRANT OPTION;
