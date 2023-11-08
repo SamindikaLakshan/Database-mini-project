@@ -192,7 +192,3 @@ VALUES
 ("To3","K.D.Malith Lakshan","Malith@gmail.com"),
 ("To4","T.L.Sandun Peris","Sandun@gmail.com"),
 ("To5","L.Dimuth Nissanka","Dimuth@gmail.com");
-
-
-
-Asith
