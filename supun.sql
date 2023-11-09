@@ -436,3 +436,15 @@ VALUES
 ("ICT1222",97,50,"TG1021"),
 ("ICT1233",63,80,"TG1021"),
 ("ICT1253",71.5,55,"TG1021");
+
+//Eligibility requirements
+
+CREATE VIEW T_FINAL_EXAM_ELEGIBILITY AS
+SELECT Student_reg_num,Subject_code,IF((A.Elegibility='EL' && B.Elegibility='EL'),'EL','NOT_EL') AS 'Final_Elegibility'
+FROM ATTENDENCE_ELIGIBILITY AS A,T_CA_ELEGIBILITY AS B
+WHERE A.Student_reg_num=B.S_id AND B.C_code=A.Subject_code;
+
+CREATE VIEW P_FINAL_EXAM_ELEGIBILITY AS
+SELECT Student_reg_num,Subject_code,IF((A.Elegibility='EL' && B.Elegibility='EL'),'EL','NOT_EL') AS 'Final_Elegibility'
+FROM ATTENDENCE_ELIGIBILITY AS A,P_CA_ELEGIBILITY AS B
+WHERE A.Student_reg_num=B.S_id AND B.C_code=A.Subject_code;
