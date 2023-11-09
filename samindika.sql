@@ -240,6 +240,7 @@ VALUES
 
 
 
+
 //Other requirements
 
 CREATE VIEW STUDENT_THEORY_GRADES AS
