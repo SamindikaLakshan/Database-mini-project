@@ -192,3 +192,15 @@ VALUES
 ("To3","K.D.Malith Lakshan","Malith@gmail.com"),
 ("To4","T.L.Sandun Peris","Sandun@gmail.com"),
 ("To5","L.Dimuth Nissanka","Dimuth@gmail.com");
+
+
+
+//Attendance Related requirements
+
+CREATE VIEW ATTENDENCE_PERCENTAGE AS 
+SELECT C_code AS 'Subject_code',At_id AS 'Student_reg_num',((Medical+sessions)/15)*100 AS 'Percentage'
+FROM ATTENDENCE;
+
+CREATE VIEW ATTENDENCE_ELIGIBILITY AS 
+SELECT Subject_code,Student_reg_num, IF(Percentage>80,'EL','NOT_EL') AS 'Elegibility'
+FROM ATTENDENCE_PERCENTAGE;
